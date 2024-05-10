@@ -11,8 +11,9 @@ FROM node:alpine AS build
 WORKDIR /favicon.inbrowser.app
 COPY --from=base /git/favicon.inbrowser.app .
 RUN npm install --global pnpm && \
+    export COREPACK_ENABLE_STRICT=0 && \
     pnpm install && \
-    pnpm run build
+    pnpm build
 
 FROM lipanski/docker-static-website
 
