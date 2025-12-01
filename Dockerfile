@@ -11,11 +11,9 @@ FROM node:alpine AS build
 WORKDIR /favicon.inbrowser.app
 COPY --from=base /git/favicon.inbrowser.app .
 RUN npm install --global pnpm && \
-    export COREPACK_ENABLE_STRICT=0 && \
-    pnpm install && \
+    pnpm install --frozen-lockfile && \
     pnpm build
 
-FROM lipanski/docker-static-website
+FROM joseluisq/static-web-server
 
-COPY --from=build /favicon.inbrowser.app/dist .
-
+COPY --from=build /favicon.inbrowser.app/dist ./public
