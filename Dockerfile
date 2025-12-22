@@ -6,7 +6,7 @@ RUN git clone https://github.com/InBrowserApp/favicon.inbrowser.app.git && \
     ([[ "$TAG" = "latest" ]] || git checkout ${TAG}) && \
     rm -rf .git
 
-FROM node:alpine AS build
+FROM --platform=$BUILDPLATFORM node:alpine AS build
 
 WORKDIR /favicon.inbrowser.app
 COPY --from=base /git/favicon.inbrowser.app .
